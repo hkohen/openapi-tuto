@@ -1,0 +1,107 @@
+openapi: 3.0.1
+info:
+  version: 1.0.0
+  title: Book api
+  description: an api for management of library business
+  contact:
+    name: Book demo
+    url: localhost:8080
+    email: hkohen8@gmail.com
+servers:
+  - url: localhost:8080
+    description: url for dev environment
+  - url: localhost:9090
+    description: url for prod env
+paths:
+  /books/getall/startswith/{s}:
+    description: book resource
+    get:
+      description: operation to get a book by id 
+      parameters: 
+        - in: path
+          name: s
+          required: true
+          schema:
+            type: string
+            example: "r"
+      responses:
+        200:
+          description: Success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/books'
+  /books/create:
+    post:
+      description: Operation to create a book
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/book'
+      responses:
+        201:
+          description: book created successfly
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/book'
+  /books/get/{id}:
+    description: get a book by id 
+    get:
+      parameters: 
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: success response 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/book'
+  /books/getall:
+    description: get all books
+    get:
+      responses:
+        200:
+          description: success response 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/books'
+components:
+  schemas:
+    book:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        title:
+          type: string
+          example: "book"
+        description:
+          type: string
+          example: "description"
+        type:
+          type: string
+          example: "action"
+    books:
+      type: array
+      items:
+        properties:
+          id:
+            type: integer
+            example: 1
+          title:
+            type: string
+            example: "book"
+          description:
+            type: string
+            example: "description"
+          type:
+            type: string
+            example: "action"
